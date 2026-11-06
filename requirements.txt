@@ -1,0 +1,15 @@
+# PyTorch for RTX 50xx (Blackwell, sm_120) needs a CUDA 12.8+ build:
+#   pip install torch==2.11.0 torchvision==0.26.0 --index-url https://download.pytorch.org/whl/cu128
+# On a Mac (MPS) or CPU, a plain `pip install torch torchvision` is fine.
+torch==2.11.0
+torchvision==0.26.0
+numpy==2.5.4
+pandas==3.1.1
+scikit-learn==1.9.1
+matplotlib==3.11.2
+pillow==13.0.0
+tqdm==4.70.1
+jupyter==1.1.1
+nbformat==5.11.1
+nbconvert==7.17.2
+ipykernel==7.4.0
