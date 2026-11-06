@@ -5,6 +5,12 @@ setting was chosen on a validation split with a written reason ([docs/decisions.
 model says "unknown" when it is not confident enough, and its robustness to low resolution, blur, and
 darkness was measured and then improved.
 
+- **89.5% test top-1** on 196 classes
+- **95.2% accuracy on accepted predictions** at 87% coverage (the rest are passed to a person as "unknown")
+- **64 px accuracy improved from 37% to 87%** with degradation augmentation (val)
+
+![Accuracy under degradation, before and after degradation augmentation](docs/figures/degradation_val.png)
+
 ## Why this project
 
 Visual inspection in manufacturing has the same core questions as this project: Can the model tell apart
@@ -93,7 +99,7 @@ procedure gives a stricter threshold if a wrong answer costs more.
 
 ### Robustness to degraded images
 
-![Degradation on val](docs/figures/degradation_val.png)
+The figure at the top of this page shows the val curves.
 
 | val top-1 | 224 px | 64 px | 32 px | blur 2 | blur 4 | brightness 0.15 |
 |---|---|---|---|---|---|---|
@@ -144,8 +150,7 @@ jupyter nbconvert --to notebook --execute --inplace notebooks/02_baseline.ipynb
 
 # 5. Learning rate sweep (6 runs, about 5 minutes each on an RTX 5070)
 python src/sweep_lr.py
-#    The chosen runs are used as ft_full and ft_crop:
-#    copy outputs/sweep_full_lr0.0001 -> outputs/ft_full, outputs/sweep_crop_lr0.0001 -> outputs/ft_crop
+python src/promote_sweep.py       # copies the chosen runs (lr 1e-4) to outputs/ft_full and outputs/ft_crop
 
 # 6. Degradation-augmented model
 python src/train.py --run_name ft_crop_degaug --crop --degrade_aug
@@ -173,6 +178,7 @@ src/
   train.py         fine-tuning loop with early stopping
   evaluate.py      predictions, metrics, degradation evaluation
   sweep_lr.py      learning rate sweep
+  promote_sweep.py copy the chosen sweep runs to ft_full and ft_crop
   final_test.py    the one test evaluation
 notebooks/         01 EDA, 02 baseline, 03 analysis
 docs/decisions.md  every decision with alternatives and reasons
