@@ -179,15 +179,3 @@ docs/decisions.md  every decision with alternatives and reasons
 docs/figures/      figures used here
 splits/            the fixed split files
 ```
-
-## Resume bullets (draft)
-
-- Built a 196-class fine-grained car classifier (Stanford Cars) with PyTorch. Fine-tuning ResNet50 on bounding
-  box crops raised validation accuracy from 49% (frozen features, same crops) to 91%, and the final model scored 89.5%
-  top-1 on a held-out test set that was evaluated only once.
-- Designed a confidence-based reject option for unknown or uncertain cases. I picked the threshold on
-  validation so that accepted predictions are at least 95% accurate, and it held on test (95.2% accuracy at
-  87% coverage).
-- Measured robustness to low resolution, blur, and low light, and found that accuracy collapsed from 91% to 37%
-  at 64 px. Degradation augmentation brought it back to 87% at a cost of 0.6 points on clean images. Every design
-  choice is documented with alternatives and evidence.
